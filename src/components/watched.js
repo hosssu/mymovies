@@ -1,6 +1,5 @@
 import React from 'react';
 import CrudGet from './CrudGet';
-import MymoviesPic from './image/mymovies.jpg';
 import './style.css'
 
 const watched = () => {
