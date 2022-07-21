@@ -5,8 +5,7 @@ import './style.css';
 const NavBar = () => {
 
 
-    var logged = window.localStorage.getItem('username')
-    var logged = logged.substring(1, logged.length - 1)
+
     var empty = () => {
         window.localStorage.setItem('username', JSON.stringify(''))
     }
