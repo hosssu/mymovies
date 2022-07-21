@@ -1,5 +1,6 @@
 import React from 'react';
 import CrudGet from './CrudGet';
+import './style.css';
 
 
 export default function Friends() {

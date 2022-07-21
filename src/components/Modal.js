@@ -2,6 +2,7 @@ import React from 'react';
 import CrudPost from './CrudPost';
 import { Modal } from 'react-modal'
 import { useState } from 'react'
+import './style.css';
 
 
 

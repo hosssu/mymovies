@@ -4,7 +4,12 @@ import './style.css';
 
 const NavBar = () => {
 
-
+    if (window.localStorage.getItem('username')) {
+        var logged = window.localStorage.getItem('username')
+        var logged = logged.substring(1, logged.length - 1)
+    } else {
+        var logged = null
+    }
 
     var empty = () => {
         window.localStorage.setItem('username', JSON.stringify(''))

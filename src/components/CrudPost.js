@@ -3,6 +3,7 @@ import axios from 'axios';
 import './style.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import './style.css';
 
 class CrudPost extends React.Component {
 
