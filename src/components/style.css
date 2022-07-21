@@ -1,0 +1,201 @@
+/* main/body */
+.body {
+    background-color: lightgrey;
+}
+
+.main {
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+    min-width: 750px;
+    margin-top: 0px;
+    background-color: #004199;
+    padding: 20px;
+
+}
+
+.mymovies {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 20px;
+    padding-top: 40px;
+
+}
+
+.foot {
+    text-align: center;
+    color: black;
+}
+
+.dividerr {
+    position: relative;
+    left: -30px;
+    border-left: 1px solid rgb(132, 132, 132);
+    padding-left: 30px;
+    height: 98%;
+}
+
+.errormsg {
+    background-color: #e34350;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #004199;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+/* watched */
+
+details {
+    font-weight: 400;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    padding: .5em;
+    padding-left: 15px;
+}
+
+summary {
+    font-weight: bold;
+    padding: 5px;
+
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+}
+
+/* navbar */
+
+
+
+/*Elokuvadata */
+
+.ontainer {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.ontainer:hover .overlay {
+    opacity: 0.7;
+}
+
+.poster {
+    border-radius: 30px;
+    width: 100%;
+    height: auto;
+    max-width: 250px;
+}
+
+.poster_recently {
+    border-radius: 30px;
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    padding: 20px;
+}
+
+.overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 30px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: rgb(255, 255, 255);
+
+}
+
+.imgplus {
+    color: black;
+    font-size: 100px;
+    position: absolute;
+}
+
+:hover.imgplus {
+    transition: .3s ease-in-out;
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+
+.add {
+    color: black;
+    font-size: 20px;
+    margin-top: 50%;
+}
+
+.LastWatched {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    font-weight: 500;
+
+}
+
+
+
+/* linkit & tekstit */
+
+.log {
+
+    color: white;
+    padding: 10px 15px 10px 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hide {
+    display: none;
+}
+
+p.error {
+    color: rgb(255, 255, 255);
+    padding-left: 5px;
+    text-align: center;
+}
+
+a {
+    color: black
+}
+
+a:hover {
+    color: #009999;
+}
+
+a.more {
+    color: black
+}
+
+
+.menu {
+    background-color: #009999
+}
