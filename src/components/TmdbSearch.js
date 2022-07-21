@@ -37,8 +37,12 @@ class TmdbSearch extends React.Component {
 
         const handleClick = () => {
             var leffat = this.state.data.filter(movie => { return movie.id === this.state.hover })
-
-            this.setState({ elokuva: leffat[0].original_title + ' - ' + leffat[0].release_date?.substring(0, 4) })
+            if (leffat[0].release_date) {
+                var release_date = leffat[0].release_date?.substring(0, 4)
+            } else {
+                var release_date = null
+            }
+            this.setState({ elokuva: leffat[0].original_title + ' - ' + release_date })
             this.setState({ MoviePoster: poster_URL + leffat[0].poster_path })
             this.setState({ movie_id: leffat[0].id })
             this.setState({ showModal: true })

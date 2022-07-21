@@ -9,7 +9,7 @@ class CrudGet extends React.Component {
     state = { recentlyW: [], username: 'jami' }
 
     componentDidMount() {
-        axios.get('http://localhost:3001/api/get', { username: this.state.username }).then((res) => {
+        axios.get('http://localhost:3306/api/get', { username: this.state.username }).then((res) => {
             this.setState({ recentlyW: res.data })
         })
     }
@@ -21,26 +21,30 @@ class CrudGet extends React.Component {
     }
 
     render() {
+
         const tmdb = 'https://www.themoviedb.org/movie/'
+
         return (
-            <div >
-                {this.state.recentlyW.slice(0, 5).map(recent => (
+            <>{this.state.recentlyW ? (
+                <div >
+                    {this.state.recentlyW.slice(0, 5).map(recent => (
 
-                    <div className="item" key={recent.id}>
-                        <details>
-                            <img className='poster_recently' src={recent.poster_image} />
-                            <summary> {recent.movieName}</summary>
-                            <br></br>
-                            <p></p>
-                            <p>Comment: {recent.movieComment}</p>
-                            <p>Watched: {recent.movieWatched?.substring(0, 10)}</p>
-                            <p><a href={tmdb + recent.movie_id} target='_blank'>Movie in The Movie Database</a></p>
-                        </details>
-                    </div>
+                        <div className="item" key={recent.id}>
+                            <details>
+                                <img className='poster_recently' src={recent.poster_image} />
+                                <summary> {recent.movieName}</summary>
+                                <br></br>
+                                <p></p>
+                                <p>Comment: {recent.movieComment}</p>
+                                <p>Watched: {recent.movieWatched?.substring(0, 10)}</p>
+                                <p><a href={tmdb + recent.movie_id} target='_blank'>Movie in The Movie Database</a></p>
+                            </details>
+                        </div>
 
-                ))
-                }
-            </div>
+                    ))
+                    }
+                </div>
+            ) : (<div className='errormsg'><p className='error'>Could not connect to database. Check username / password.</p></div>)}</>
         )
     }
 }
