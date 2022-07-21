@@ -195,6 +195,9 @@ a.more {
     color: black
 }
 
+a.more:hover {
+    color: #009999
+}
 
 .menu {
     background-color: #009999
