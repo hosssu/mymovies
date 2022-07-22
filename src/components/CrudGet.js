@@ -2,25 +2,31 @@ import React from 'react';
 import axios from 'axios';
 import './style.css';
 
-
-
 class CrudGet extends React.Component {
 
-    state = { recentlyW: [], username: 'jami' }
+    state = { username: "jami", recentlyW: [] }
+
 
     componentDidMount() {
-        axios.get('http://localhost:3306/api/get', { username: this.state.username }).then((res) => {
-            this.setState({ recentlyW: res.data })
-        })
+        this.getMovies(this.state.recentlyW);
     }
 
     componentDidUpdate(recentlyW) {
         if (this.state.recentlyW !== recentlyW) {
-            console.log(recentlyW)
+            console.log(this.state.recentlyW)
         }
     }
 
+    getMovies = async () => {
+        const res = await axios.get('http://localhost:3301/get', {
+            username: this.state.username,
+        })
+        this.setState({ recentlyW: res.data })
+        console.log(this.state.username)
+    }
+
     render() {
+
 
         const tmdb = 'https://www.themoviedb.org/movie/'
 
@@ -44,9 +50,10 @@ class CrudGet extends React.Component {
                     ))
                     }
                 </div>
-            ) : (<div className='errormsg'><p className='error'>Could not connect to database. Check username / password.</p></div>)}</>
+            ) : (<div className='errormsg'><p className='error'>Could not connect to database. Check connection and username/password.</p></div>)}</>
         )
     }
+
 }
 
 export default CrudGet;

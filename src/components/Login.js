@@ -21,7 +21,7 @@ const Login = () => {
     const login = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3306/login',
+            const response = await axios.post('http://localhost:3301/login',
                 { username: username, password: password })
             setSuccess(true)
                 ;

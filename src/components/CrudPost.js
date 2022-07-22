@@ -29,7 +29,7 @@ class CrudPost extends React.Component {
         var movieID = window.localStorage.getItem('movie_id')
 
         const submitReview = (event) => {
-            axios.post('http://localhost:3306/api/insert', {
+            axios.post('http://localhost:3301/insert', {
                 username: this.state.username,
                 movie_id: this.state.movie_id,
                 movieName: this.state.movieName,
@@ -37,7 +37,6 @@ class CrudPost extends React.Component {
                 movieWatched: this.state.movieWatched,
                 poster_image: this.state.poster_image
             }).then(() => {
-
                 alert('Great success!')
             })
         }

@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express();
@@ -6,18 +6,20 @@ const mysql = require('mysql')
 
 const connection = mysql.createConnection({
     host: "localhost",
-    user: "killerpi",
-    password: "SID(KsmoQnyt",
-    port: 3306,
-    database: "killerpi_mymovies"
+    user: "root",
+    password: "admin",
+    database: "mymovies_jami"
 });
 
 app.use(cors());
-app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.json());
 
-app.get('/api/get', (req, res) => {
-    const sqlGet = `SELECT * FROM movie_reviews ORDER BY id DESC LIMIT 10`
+
+app.get('/get', (req, res) => {
+    console.log(req.body.username)
+    const sqlGet = `SELECT * FROM movie_reviews_jami ORDER BY id DESC LIMIT 10`
     connection.query(sqlGet, (err, result) => {
         res.send(result)
         console.log(err)
@@ -25,13 +27,14 @@ app.get('/api/get', (req, res) => {
 });
 
 app.post('/insert', (req, res) => {
+    console.log(req.body.username);
     const username = req.body.username;
     const movie_id = req.body.movie_id;
     const movieName = req.body.movieName;
     const movieComment = req.body.movieComment;
     const movieWatched = req.body.movieWatched;
     const poster_image = req.body.poster_image;
-    const sqlInsert = `INSERT INTO movie_reviews (movieName, movieComment, movieWatched, poster_image, movie_id) VALUES (?,?,?,?,?)`;
+    const sqlInsert = `INSERT INTO movie_reviews_${username} (movieName, movieComment, movieWatched, poster_image, movie_id) VALUES (?,?,?,?,?)`;
     connection.query(sqlInsert, [movieName, movieComment, movieWatched, poster_image, movie_id], (err, result) => { console.log(err) });
 });
 
@@ -69,7 +72,7 @@ app.post('/login', (req, res) => {
 })
 
 
-app.listen(3306, () => {
-    console.log('running on port 3306');
+app.listen(3301, () => {
+    console.log('running on port 3301');
 });
 
