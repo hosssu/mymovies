@@ -18,7 +18,7 @@ class CrudPost extends React.Component {
             this.setState({ movieName: movie_name })
             this.setState({ poster_image: movie_poster })
             this.setState({ movie_id: movieID })
-            console.log(this.state.poster_image)
+
         }
         var getUser = window.localStorage.getItem('username')
         var getUser = getUser.substring(1, getUser.length - 1)
@@ -28,7 +28,7 @@ class CrudPost extends React.Component {
         var movie_name = movie_name.substring(1, movie_name.length - 1)
         var movieID = window.localStorage.getItem('movie_id')
 
-        const submitReview = (event) => {
+        const submitReview = () => {
             axios.post('http://localhost:3301/insert', {
                 username: this.state.username,
                 movie_id: this.state.movie_id,

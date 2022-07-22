@@ -16,12 +16,9 @@ const home = () => {
                 <div className='LastWatched'>
                     <h2 className='ui header' >Recently watched</h2>
                     <CrudGet />
-                    <h3><a className='more'>Show more...</a></h3>
+
                 </div><br></br><br></br>
-                <div className='LastWatched'>
-                    <h2 className='ui header'>Recently watched by friends</h2>
-                    <div className='LastWatched' style={{ padding: '0px', }}><h3><a className='more'>Show More...</a></h3>
-                    </div></div><br></br><br></br>
+                <br></br>
 
 
                 <TmdbSearch />

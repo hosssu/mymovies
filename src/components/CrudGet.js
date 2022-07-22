@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import './style.css';
+import { ModalDimmer } from 'semantic-ui-react';
 
 class CrudGet extends React.Component {
 
-    state = { username: "jami", recentlyW: [] }
-
+    state = { username: "jami", recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
 
     componentDidMount() {
         this.getMovies(this.state.recentlyW);
@@ -22,18 +22,32 @@ class CrudGet extends React.Component {
             username: this.state.username,
         })
         this.setState({ recentlyW: res.data })
-        console.log(this.state.username)
+
     }
 
     render() {
 
+        const showMore = () => {
+            if (this.state.show === true) {
+                this.setState({ variable: 5 })
+                this.setState({ buttonText: "Show more..." })
+                this.setState({ show: false })
+            } else {
+                this.setState({ variable: 10 })
+                this.setState({ buttonText: "Show less..." })
+                this.setState({ show: true })
+            }
+            console.log(this.state.show)
+
+        }
 
         const tmdb = 'https://www.themoviedb.org/movie/'
+
 
         return (
             <>{this.state.recentlyW ? (
                 <div >
-                    {this.state.recentlyW.slice(0, 5).map(recent => (
+                    {this.state.recentlyW.slice(0, `${this.state.variable}`).map(recent => (
 
                         <div className="item" key={recent.id}>
                             <details>
@@ -46,11 +60,12 @@ class CrudGet extends React.Component {
                                 <p><a href={tmdb + recent.movie_id} target='_blank'>Movie in The Movie Database</a></p>
                             </details>
                         </div>
-
                     ))
-                    }
+                    }<br /><button className='ui button' onClick={showMore}>{this.state.buttonText}</button>
                 </div>
-            ) : (<div className='errormsg'><p className='error'>Could not connect to database. Check connection and username/password.</p></div>)}</>
+
+            ) : (<div className='errormsg'><p className='error'>Could not connect to database. Check connection and username/password.</p></div>)
+            }</>
         )
     }
 

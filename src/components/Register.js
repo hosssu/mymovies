@@ -28,8 +28,6 @@ const Register = () => {
     const [show, setShow] = useState('none')
     const empty = ''
 
-    console.log(Success)
-
 
     useEffect(() => {
         setValidUsernameReg(USER_REGEX.test(usernameReg));
