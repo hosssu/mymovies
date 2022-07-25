@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './style.css';
 
-class CrudGet extends React.Component {
+class CrudGetFriends extends React.Component {
 
     state = { username: '', recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
 
@@ -21,7 +21,7 @@ class CrudGet extends React.Component {
         var getUser = getUser.substring(1, getUser.length - 1)
         this.setState({ username: getUser })
         console.log(this.state.username)
-        const res = await axios.get('http://localhost:3301/get/user', {
+        const res = await axios.get('http://localhost:3301/get/friends', {
             params: { username: getUser }
         })
         this.setState({ recentlyW: res.data })
@@ -55,7 +55,7 @@ class CrudGet extends React.Component {
                         <div className="item" key={recent.id}>
                             <details>
                                 <img className='poster_recently' src={recent.poster_image} />
-                                <summary> {recent.movieName}</summary>
+                                <summary> {recent.movieName} By {recent.username}</summary>
                                 <br></br>
                                 <p></p>
                                 <p>Comment: {recent.movieComment}</p>
@@ -74,4 +74,4 @@ class CrudGet extends React.Component {
 
 }
 
-export default CrudGet;
+export default CrudGetFriends;

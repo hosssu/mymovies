@@ -17,9 +17,18 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 
-app.get('/get', (req, res) => {
+app.get('/get/user', (req, res) => {
     let username = req.query.username
-    const sqlGet = `SELECT * FROM movie_reviews_${username} ORDER BY id`
+    const sqlGet = `SELECT * FROM movie_reviews WHERE username= '${username}';`
+    connection.query(sqlGet, (err, result) => {
+        res.send(result)
+        console.log(err)
+    });
+});
+
+app.get('/get/friends', (req, res) => {
+    let username = req.query.username
+    const sqlGet = `SELECT * FROM movie_reviews WHERE username NOT LIKE '${username}'`;
     connection.query(sqlGet, (err, result) => {
         res.send(result)
         console.log(err)
@@ -34,8 +43,8 @@ app.post('/insert', (req, res) => {
     const movieComment = req.body.movieComment;
     const movieWatched = req.body.movieWatched;
     const poster_image = req.body.poster_image;
-    const sqlInsert = `INSERT INTO movie_reviews_${username} (movieName, movieComment, movieWatched, poster_image, movie_id) VALUES (?,?,?,?,?)`;
-    connection.query(sqlInsert, [movieName, movieComment, movieWatched, poster_image, movie_id], (err, result) => { console.log(err) });
+    const sqlInsert = `INSERT INTO movie_reviews (movieName, movieComment, movieWatched, poster_image, movie_id, username) VALUES (?,?,?,?,?,?)`;
+    connection.query(sqlInsert, [movieName, movieComment, movieWatched, poster_image, movie_id, username], (err, result) => { console.log(err) });
 });
 
 
