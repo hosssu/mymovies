@@ -7,12 +7,12 @@ import './style.css';
 
 const Login = () => {
 
-
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
     const [Success, setSuccess] = useState(false)
     const [show, setShow] = useState('none')
+    const [loginMessage, setLoginMessage] = useState('')
 
     useEffect(() => {
         window.localStorage.setItem('username', JSON.stringify(username));
@@ -22,32 +22,33 @@ const Login = () => {
         event.preventDefault();
         try {
             const response = await axios.post('http://localhost:3301/login',
-                { username: username, password: password })
-            setSuccess(true)
-                ;
-            setPassword('');
-            console.log(response)
-            if (response.data[0] != null) {
+                {
+                    username: username,
+                    password: password
+                })
 
-            }
-            else {
+            if (response.data[0] == null) {
                 setErrorMsg('Wrong username or password!')
                 setShow('')
+            } else {
+                setSuccess(true)
+                setLoginMessage('You are now logged in!')
+                setPassword('')
             }
         }
         catch (err) {
-            console.log(err, errorMsg)
+            console.log(err)
+            setErrorMsg('Something went wrong' + ' ' + '"' + err.message + '"')
+            setShow('')
         }
     }
-
-
 
 
     return (
         <>  {Success ? (
             <section className='ui raised very padded text container segment' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
                 <div className='LastWatched'>
-                    <h2 className='ui header'>You are logged in!</h2><br></br>
+                    <h2 className='ui header'>{loginMessage}</h2>
                     <a href='/'>Go to home</a>
                 </div>
             </section>) : (
@@ -87,7 +88,6 @@ const Login = () => {
                         <br></br><p>Need an account?<br />
                             <span className='line'>
                                 <Link to='/register'>Register</Link> </span></p>
-
 
                     </div>
 

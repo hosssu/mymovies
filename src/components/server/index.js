@@ -18,8 +18,8 @@ app.use(express.json());
 
 
 app.get('/get', (req, res) => {
-    console.log(req.body.username)
-    const sqlGet = `SELECT * FROM movie_reviews_jami ORDER BY id DESC LIMIT 10`
+    let username = req.query.username
+    const sqlGet = `SELECT * FROM movie_reviews_${username} ORDER BY id`
     connection.query(sqlGet, (err, result) => {
         res.send(result)
         console.log(err)
@@ -42,31 +42,36 @@ app.post('/insert', (req, res) => {
 app.post('/register', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    connection.query(`INSERT INTO login_data (username, password) VALUES (?,?)`,
-        [username, password], (err, result) => { console.log(err, result) })
-    connection.query(`CREATE TABLE IF NOT EXISTS movie_reviews_${username} LIKE movie_reviews;`,
-        [username, password], (err, result) => { console.log(err, result) })
-})
+    connection.query('SELECT * FROM login_data WHERE username = ?',
+        [username], (err, result) => {
+            if (result[0] == null) {
+                console.log('You are good to go!')
+                res.send(result)
+                connection.query(`INSERT INTO login_data (username, password) VALUES (?,?)`,
+                    [username, password], (err, result) => { console.log(err, result) })
+                connection.query(`CREATE TABLE IF NOT EXISTS movie_reviews_${username} LIKE movie_reviews;`,
+                    [username, password], (err, result) => { console.log(err, result) })
+            } else {
+                console.log(result)
+                res.send('That username already exists!')
 
+            }
+        });
+})
 
 
 app.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-
     connection.query('SELECT * FROM login_data WHERE username = ? AND password = ?',
         [username, password], (err, result) => {
-            if (err) {
-                console.log(err)
-                res.send({ err: err });
-            }
-
+            console.log(result)
+            console.log(err)
             if (result) {
-                res.send(result);
-            }
-
-            else {
-                res.send({ message: 'Wrong username or password' })
+                res.send(result)
+            } else if (err) {
+                console.log(err)
+                res.send(err)
             }
         })
 })

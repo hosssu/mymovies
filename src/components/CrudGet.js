@@ -1,11 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import './style.css';
-import { ModalDimmer } from 'semantic-ui-react';
 
 class CrudGet extends React.Component {
 
-    state = { username: "jami", recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
+    state = { username: '', recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
 
     componentDidMount() {
         this.getMovies(this.state.recentlyW);
@@ -13,13 +12,17 @@ class CrudGet extends React.Component {
 
     componentDidUpdate(recentlyW) {
         if (this.state.recentlyW !== recentlyW) {
-            console.log(this.state.recentlyW)
+
         }
     }
 
     getMovies = async () => {
+        var getUser = window.localStorage.getItem('username')
+        var getUser = getUser.substring(1, getUser.length - 1)
+        this.setState({ username: getUser })
+        console.log(this.state.username)
         const res = await axios.get('http://localhost:3301/get', {
-            username: this.state.username,
+            params: { username: getUser }
         })
         this.setState({ recentlyW: res.data })
 

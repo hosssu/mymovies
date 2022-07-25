@@ -42,6 +42,7 @@ const Register = () => {
 
     useEffect(() => {
         setErrMessage('');
+        setShow('none')
     }, [usernameReg, passwordReg, matchPasswordReg])
 
     const register = async (event) => {
@@ -53,16 +54,24 @@ const Register = () => {
             return
         }
         try {
-            axios.post('http://localhost:3301/register',
+            const result = await axios.post('http://localhost:3301/register',
                 {
                     username: usernameReg,
                     password: passwordReg
                 })
-            setUsernameReg('');
-            setPasswordReg('');
-            setMatchPasswordReg('');
-            setSuccess(true)
+            if (result.data[0] == null) {
+                console.log('You are good to go!')
+                setUsernameReg('');
+                setPasswordReg('');
+                setMatchPasswordReg('');
+                setSuccess(true)
 
+            }
+            else {
+                console.log('That username already exists!');
+                setErrMessage('That username already exists!');
+                setShow('')
+            }
 
         }
         catch (err) {
@@ -78,8 +87,9 @@ const Register = () => {
         <>  {Success ? (
             <section className='ui raised very padded text container segment' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
                 <div className='LastWatched'>
-                    <h2 className='ui header'>Registration complete!</h2><br></br>
-                    <a href='/Login'>You can now log in!</a>
+                    <h2 className='ui header'>Registration complete!</h2>
+                    <p> You can now start adding movies to your watched list!</p>
+                    <a href='/Login'>But first you need to log in!</a>
                 </div>
             </section>) : (
             <div>
