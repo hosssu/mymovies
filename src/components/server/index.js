@@ -17,10 +17,12 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 
+
 app.get('/get/user', (req, res) => {
     let username = req.query.username
-    const sqlGet = `SELECT * FROM movie_reviews WHERE username= '${username}';`
+    const sqlGet = `SELECT * FROM movie_reviews WHERE username= '${username}'`
     connection.query(sqlGet, (err, result) => {
+        console.log(result)
         res.send(result)
         console.log(err)
     });
@@ -36,7 +38,6 @@ app.get('/get/friends', (req, res) => {
 });
 
 app.post('/insert', (req, res) => {
-    console.log(req.body.username);
     const username = req.body.username;
     const movie_id = req.body.movie_id;
     const movieName = req.body.movieName;
@@ -58,8 +59,7 @@ app.post('/register', (req, res) => {
                 res.send(result)
                 connection.query(`INSERT INTO login_data (username, password) VALUES (?,?)`,
                     [username, password], (err, result) => { console.log(err, result) })
-                connection.query(`CREATE TABLE IF NOT EXISTS movie_reviews_${username} LIKE movie_reviews;`,
-                    [username, password], (err, result) => { console.log(err, result) })
+
             } else {
                 console.log(result)
                 res.send('That username already exists!')
@@ -86,7 +86,7 @@ app.post('/login', (req, res) => {
 })
 
 
-app.listen(3301, () => {
-    console.log('running on port 3301');
-});
-
+const PORT = process.env.PORT || 3301
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})

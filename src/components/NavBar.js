@@ -12,7 +12,7 @@ const NavBar = () => {
     }
 
     var empty = () => {
-        window.localStorage.setItem('username', JSON.stringify(''))
+        window.localStorage.clear()
     }
 
     return (
@@ -23,7 +23,7 @@ const NavBar = () => {
                 <Link className='item' to="/friends">Friends</Link>
                 <div className="right menu">
                     <div className='log'>{logged}</div>
-                    <a className="item" href="/login" onClick={empty}>Log out</a>
+                    <a className="item" href="/" onClick={empty}>Log out</a>
                 </div>
             </div>
         ) : (

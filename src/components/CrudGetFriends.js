@@ -4,7 +4,7 @@ import './style.css';
 
 class CrudGetFriends extends React.Component {
 
-    state = { username: '', recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
+    state = { user: window.localStorage.getItem('username'), recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
 
     componentDidMount() {
         this.getMovies(this.state.recentlyW);
@@ -12,20 +12,17 @@ class CrudGetFriends extends React.Component {
 
     componentDidUpdate(recentlyW) {
         if (this.state.recentlyW !== recentlyW) {
-
+            // console.log(this.state.recentlyW)
         }
     }
 
     getMovies = async () => {
-        var getUser = window.localStorage.getItem('username')
-        var getUser = getUser.substring(1, getUser.length - 1)
-        this.setState({ username: getUser })
-        console.log(this.state.username)
-        const res = await axios.get('http://localhost:3301/get/friends', {
-            params: { username: getUser }
-        })
-        this.setState({ recentlyW: res.data })
-
+        if (this.state.user) {
+            const res = await axios.get('/get.php')
+            //console.log(res)
+            this.setState({ recentlyW: (res.data) })
+            this.setState({ user: this.state.user.substring(1, this.state.user.length - 1) })
+        } else { return null }
     }
 
     render() {
@@ -50,17 +47,17 @@ class CrudGetFriends extends React.Component {
         return (
             <>{this.state.recentlyW ? (
                 <div >
-                    {this.state.recentlyW.slice(0, `${this.state.variable}`).map(recent => (
+                    {this.state.recentlyW.filter(movie => { return movie.username !== this.state.user }).slice(0, `${this.state.variable}`).map(recent => (
 
                         <div className="item" key={recent.id}>
                             <details>
-                                <img className='poster_recently' src={recent.poster_image} />
+                                <img className='poster_recently' src={recent.poster_image} alt='Poster' />
                                 <summary> {recent.movieName} By {recent.username}</summary>
                                 <br></br>
                                 <p></p>
                                 <p>Comment: {recent.movieComment}</p>
                                 <p>Watched: {recent.movieWatched?.substring(0, 10)}</p>
-                                <p><a href={tmdb + recent.movie_id} target='_blank'>Movie in The Movie Database</a></p>
+                                <p><a href={tmdb + recent.movie_id} target='_blank' rel="noreferrer">Movie in The Movie Database</a></p>
                             </details>
                         </div>
                     ))
@@ -69,6 +66,7 @@ class CrudGetFriends extends React.Component {
 
             ) : (<div className='errormsg'><p className='error'>Could not connect to database. Check connection and username/password.</p></div>)
             }</>
+
         )
     }
 

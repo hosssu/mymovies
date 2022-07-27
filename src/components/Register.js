@@ -11,7 +11,6 @@ const Register = () => {
     const USER_REGEX = /^[A-z][A-z0-9-_]{3,10}$/;
     const PWD_REGEX = /^[A-z][A-z0-9-_]{3,10}$/;
 
-
     const [usernameReg, setUsernameReg] = useState('')
     const [passwordReg, setPasswordReg] = useState('')
 
@@ -20,7 +19,6 @@ const Register = () => {
 
     const [matchPasswordReg, setMatchPasswordReg] = useState('');
     const [validMatch, setValidMatch] = useState(false);
-    const [matchFocus, setMatchFocus] = useState(false);
 
     const [errMessage, setErrMessage] = useState('')
     const [Success, setSuccess] = useState(false)
@@ -54,7 +52,7 @@ const Register = () => {
             return
         }
         try {
-            const result = await axios.post('http://localhost:3301/register',
+            const result = await axios.post('/register.php',
                 {
                     username: usernameReg,
                     password: passwordReg

@@ -11,7 +11,7 @@ class TmdbSearch extends React.Component {
     state = { data: [], elokuva: '', MoviePoster: '', showModal: false, hover: '', movie_id: '' }
 
     onSearchSubmit = async (entry) => {
-        const poster_URL = `https://image.tmdb.org/t/p/original`;
+
         const API_KEY = "e7a1c61ec92c97b51e99914c3442acee"
         const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${entry}`)
         this.setState({ data: res.data.results })
@@ -33,7 +33,6 @@ class TmdbSearch extends React.Component {
         const CloseModal = () => {
             this.setState({ showModal: false })
         }
-
 
         const handleClick = () => {
             var leffat = this.state.data.filter(movie => { return movie.id === this.state.hover })
@@ -61,7 +60,7 @@ class TmdbSearch extends React.Component {
                         </div >
                     </div >
                 </Modal>
-                <h2 className="ui header" style={{}}> Add a movie from TMDB</h2>
+                <h2 className="ui header" style={{ textAlign: 'center' }}> Search movies from TMDB</h2>
                 <div className='ui container' style={{ marginTop: '30px' }}>
                     <SearchInput onSearchSubmit={this.onSearchSubmit} />
                     <br></br>

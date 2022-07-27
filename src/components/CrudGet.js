@@ -4,7 +4,7 @@ import './style.css';
 
 class CrudGet extends React.Component {
 
-    state = { username: '', recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
+    state = { user: window.localStorage.getItem('username'), recentlyW: [], variable: 5, buttonText: 'Show more...', show: false }
 
     componentDidMount() {
         this.getMovies(this.state.recentlyW);
@@ -17,15 +17,12 @@ class CrudGet extends React.Component {
     }
 
     getMovies = async () => {
-        var getUser = window.localStorage.getItem('username')
-        var getUser = getUser.substring(1, getUser.length - 1)
-        this.setState({ username: getUser })
-        console.log(this.state.username)
-        const res = await axios.get('http://localhost:3301/get/user', {
-            params: { username: getUser }
-        })
-        this.setState({ recentlyW: res.data })
-
+        if (this.state.user) {
+            const res = await axios.get('/get.php')
+            //console.log(res)
+            this.setState({ recentlyW: (res.data) })
+            this.setState({ user: this.state.user.substring(1, this.state.user.length - 1) })
+        } else { return null }
     }
 
     render() {
@@ -43,24 +40,21 @@ class CrudGet extends React.Component {
             console.log(this.state.show)
 
         }
-
         const tmdb = 'https://www.themoviedb.org/movie/'
-
-
         return (
             <>{this.state.recentlyW ? (
                 <div >
-                    {this.state.recentlyW.slice(0, `${this.state.variable}`).map(recent => (
+                    {this.state.recentlyW.filter(movie => { return movie.username === this.state.user }).slice(0, `${this.state.variable}`).map(recent => (
 
                         <div className="item" key={recent.id}>
                             <details>
-                                <img className='poster_recently' src={recent.poster_image} />
+                                <img className='poster_recently' src={recent.poster_image} alt='Poster' />
                                 <summary> {recent.movieName}</summary>
                                 <br></br>
                                 <p></p>
                                 <p>Comment: {recent.movieComment}</p>
                                 <p>Watched: {recent.movieWatched?.substring(0, 10)}</p>
-                                <p><a href={tmdb + recent.movie_id} target='_blank'>Movie in The Movie Database</a></p>
+                                <p><a href={tmdb + recent.movie_id} target='_blank' rel="noreferrer">Movie in The Movie Database</a></p>
                             </details>
                         </div>
                     ))

@@ -21,15 +21,16 @@ const Login = () => {
     const login = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3301/login',
+            const response = await axios.post('/login.php',
                 {
                     username: username,
                     password: password
                 })
-
-            if (response.data[0] == null) {
+            console.log(response.data[0])
+            if (response.data[0] === "A") {
                 setErrorMsg('Wrong username or password!')
                 setShow('')
+
             } else {
                 setSuccess(true)
                 setLoginMessage('You are now logged in!')
