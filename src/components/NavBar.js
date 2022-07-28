@@ -16,20 +16,24 @@ const NavBar = () => {
     }
 
     return (
-        <> {logged ? (
-            <div className="ui grey inverted menu">
-                <Link className='item' to="/">MyMovies</Link>
-                <Link className='item' to="/watched">Watched</Link>
-                <Link className='item' to="/friends">Friends</Link>
-                <div className="right menu">
-                    <div className='log'>{logged}</div>
-                    <a className="item" href="/" onClick={empty}>Log out</a>
+        <section> {logged ? (
+            <div className='menuli'>
+                <div className="nav1">
+                    <Link className='menuitem' to="/">MyMovies</Link></div>
+                <div className="nav2">
+                    <Link className='menuitem' to="/watched">Watched</Link></div>
+                <div className="nav3">
+                    <Link className='menuitem' to="/friends">Friends</Link></div>
+                <div className="nav5">{logged}</div>
+                <div className="nav4">
+                    <a className="menuitem" href="/" onClick={empty}>Log out</a>
                 </div>
             </div>
         ) : (
-            <div className="ui grey inverted menu">
-                <a className="item" href="/login">Log in</a>
-            </div>)}</>
+            <div className="nav6">
+                <a className='menuitem' href="/login">Log in</a>
+            </div>)
+        }</section>
     )
 }
 

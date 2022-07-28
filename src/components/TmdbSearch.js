@@ -55,40 +55,42 @@ class TmdbSearch extends React.Component {
                         <div className='ui raised very padded text container segment'>
                             <div>
                                 <CrudPost /><br></br>
-                                <button className='ui button' onClick={CloseModal}>Close</button>
+                                <button className='ui button' style={{ backgroundColor: '#cc3333' }} onClick={CloseModal}>Close</button>
                             </div >
                         </div >
                     </div >
                 </Modal>
                 <h2 className="ui header" style={{ textAlign: 'center' }}> Search movies from TMDB</h2>
-                <div className='ui container' style={{ marginTop: '30px' }}>
-                    <SearchInput onSearchSubmit={this.onSearchSubmit} />
-                    <br></br>
 
-                    {this.state.data.map(movie => (
-                        <div key={movie.id}>
-                            <div className='ui segment' style={{ backgroundColor: 'white' }}>
-                                <div className="ui two column very relaxed grid">
-                                    <div className='column' >
-                                        <div className='ontainer' onMouseEnter={() => this.setState({ hover: movie.id })} onMouseLeave={() => this.setState({ hover: '' })} >
-                                            <img className="poster" src={poster_URL + movie.poster_path} alt="image" />
-                                            <div className='overlay'>
-                                                <img className='imgplus' src={plusPic} onClick={handleClick} />
-                                                <p className='add'>Add to watched!</p></div></div></div>
+                <SearchInput onSearchSubmit={this.onSearchSubmit} />
+                <br></br>
 
-                                    <div className='column'><div className='dividerr'>
-                                        <h2 className='ui header' style={{ marginTop: '10px' }}>{movie.original_title} - ({movie.release_date?.substring(0, 4)})</h2>
-                                        <h3>{movie.overview}</h3>
-                                    </div>
-                                    </div>
+                {this.state.data.map(movie => (
+
+                    <div key={movie.id} className='tmdbsearch'>
+
+                        <div className="tmdbsearch_inner" onMouseEnter={() => this.setState({ hover: movie.id })} onMouseLeave={() => this.setState({ hover: '' })}>
+                            <div className='overlaycontainer'>
+                                <img className="poster" src={poster_URL + movie.poster_path} alt="image" />
+                                <div className='imgtop'>
+                                    <img className='imgplus' src={plusPic} onClick={handleClick} />
+                                    <p className='add'>Add to watched!</p>
                                 </div>
                             </div>
-                            <br></br>
+
+
                         </div>
-                    ))}
 
 
-                </div>
+                        <div className='tmdbsearch_inner'>
+                            <h2 style={{ marginTop: '10px' }}>{movie.original_title} - ({movie.release_date?.substring(0, 4)})</h2>
+                            <p>{movie.overview}</p>
+                        </div>
+
+
+                    </div>
+
+                ))}
             </div>
         )
 

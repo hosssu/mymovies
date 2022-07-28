@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.get('/get/user', (req, res) => {
     let username = req.query.username
-    const sqlGet = `SELECT * FROM movie_reviews WHERE username= '${username}'`
+    const sqlGet = `SELECT * FROM movie_reviews`
     connection.query(sqlGet, (err, result) => {
         console.log(result)
         res.send(result)
