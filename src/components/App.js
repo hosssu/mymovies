@@ -7,23 +7,23 @@ import Friends from './Friends'
 import Home from './home'
 import Login from './Login';
 import Register from './Register';
+import WatchList from './WatchList';
 
 const App = () => {
 
     return (
-        <div className='main'>
+        <div className='mein'>
             <BrowserRouter>
                 <NavBar />
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/watched' element={<Watched />} />
                     <Route path='/friends' element={<Friends />} />
+                    <Route path='/WatchList' element={<WatchList />} />
                     <Route path='/login' element={<Login />} />
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </BrowserRouter>
-
-
         </div>
 
     )

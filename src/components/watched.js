@@ -1,18 +1,16 @@
 import React from 'react';
-import CrudGet from './CrudGet';
 import './style.css'
 import CrudGetAll from './CrudGetAll'
-import CrudSearch from './CrudSearch';
 
 const watched = () => {
     return (
         <div>
 
 
-            <div className='ui raised very padded text container segment' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
+            <div className='LastWatched' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
 
                 <div className='LastWatched'>
-                    <h2 className='ui header'>Watched</h2>
+                    <h2 style={{ textAlign: 'center' }}>Watched</h2>
                     <CrudGetAll />
                 </div><br></br><br></br>
 

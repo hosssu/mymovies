@@ -83,17 +83,17 @@ const Register = () => {
 
     return (
         <>  {Success ? (
-            <section className='ui raised very padded text container segment' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
+            <section className='LastWatched' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
                 <div className='LastWatched'>
-                    <h2 className='ui header'>Registration complete!</h2>
+                    <h2 style={{ textAlign: 'center' }}>Registration complete!</h2>
                     <p> You can now start adding movies to your watched list!</p>
                     <a href='/Login'>But first you need to log in!</a>
                 </div>
             </section>) : (
             <div>
-                <div className='ui raised very padded text container segment' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
+                <div className='LastWatched' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
                     <div className='LastWatched'>
-                        <h2 className='ui header'>Register</h2><br></br>
+                        <h2 style={{ textAlign: 'center' }}>Register</h2><br></br>
                         <form className='ui form' onSubmit={register}>
                             <div className='field'>
                                 <label>Username

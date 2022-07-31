@@ -19,18 +19,16 @@ class CrudSearch extends React.Component {
     render() {
 
         return (
-            <div className='ui segment'>
-                <form onSubmit={this.onFormSubmit} className='ui form'>
-                    <div className='field'>
-                        <div className='ui massive icon input'>
-                            <input type="text" placeholder='Search for a movie..'
-                                onChange={(event) => this.setState({ entry: event.target.value })}
-                                value={this.state.entry}>
-                            </input>
-                            <i className='search icon'></i>
-                        </div>
-                    </div>
+            <div className='searchContainer'>
+                <form onSubmit={this.onFormSubmit}>
+                    <div className='input'>
 
+                        <input type="search" placeholder='Search for a movie..'
+                            onChange={(event) => this.setState({ entry: event.target.value })}
+                            value={this.state.entry}>
+                        </input>
+
+                    </div>
                 </form>
             </div>
         )

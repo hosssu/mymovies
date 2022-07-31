@@ -4,7 +4,6 @@ import MymoviesPic from './image/mymovies.jpg';
 import TmdbSearch from './TmdbSearch';
 import CrudGet from './CrudGet';
 import CrudGetFriends from './CrudGetFriends';
-import StarRating from '../StarRating';
 
 class home extends React.Component {
 
@@ -14,32 +13,33 @@ class home extends React.Component {
 
         return (
 
-            <div>
+
+
+            <div className='LastWatched' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
                 <img className='mymovies' src={MymoviesPic} alt="MyMovies App" />
-                <div className='LastWatched' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
-                    <div className={this.state.username ? 'LastWatched' : 'hide'} >
-                        <h2 className='ui header' style={{ textAlign: 'center' }}>Recently watched</h2>
-                        <CrudGet />
-                    </div> <br />
+                <div className={this.state.username ? 'LastWatched' : 'hide'} >
+                    <h2 style={{ textAlign: 'center' }}>Recently watched movies</h2>
+                    <CrudGet />
+                </div> <br />
 
-                    <div className={this.state.username ? 'LastWatched' : 'hide'} >
-                        <h2 className='ui header' style={{ textAlign: 'center' }}>What others have watched recently</h2>
-                        <CrudGetFriends />
-                    </div> <br />
-
+                <div className={this.state.username ? 'LastWatched' : 'hide'} >
+                    <h2 style={{ textAlign: 'center' }}>What others have watched recently</h2>
+                    <CrudGetFriends />
+                </div> <br />
 
 
-                    <div className='LastWatched'>
 
-                        <TmdbSearch />
-                    </div> <br></br><br></br>
+                <div className='LastWatched'>
+
+                    <TmdbSearch />
+                </div> <br></br><br></br>
 
 
-                    <p className="foot">Powered by <a href="https://www.themoviedb.org/">The Movie Database API</a></p>
-
-                </div >
+                <p className="foot">Powered by <a href="https://www.themoviedb.org/">The Movie Database API</a></p>
 
             </div >
+
+
 
         )
     }

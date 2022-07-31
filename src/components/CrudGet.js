@@ -8,8 +8,8 @@ import CrudEdit from './CrudEdit'
 class CrudGet extends React.Component {
 
     state = {
-        user: window.localStorage.getItem('username'),
-        recentlyW: [],
+        user: JSON.parse(window.localStorage.getItem('username')),
+        recentlyW: [{ movieName: "You haven't added any movies to your watchlist yet", movieOverview: "You can add movies from the TMDB search feature on Mymovies front page", user: JSON.parse(window.localStorage.getItem('username')), wlist: 0 }],
         variable: 5,
         buttonText: 'Show more...',
         show: false,
@@ -40,10 +40,10 @@ class CrudGet extends React.Component {
 
     getMovies = async () => {
         if (this.state.user) {
-            const res = await axios.get('http://localhost:3301/get/user')
+            const res = await axios.get('/get.php')
             //console.log(res)
             this.setState({ recentlyW: (res.data) })
-            this.setState({ user: this.state.user.substring(1, this.state.user.length - 1) })
+
         } else { return null }
     }
 
@@ -59,7 +59,7 @@ class CrudGet extends React.Component {
                 this.setState({ buttonText: "Show less..." })
                 this.setState({ show: true })
             }
-            console.log(this.state.show)
+            //console.log(this.state.show)
         }
 
         const klousModal = () => {
@@ -82,11 +82,11 @@ class CrudGet extends React.Component {
 
         const tmdb = 'https://www.themoviedb.org/movie/'
 
-        return (
 
+        return (
             <><Modal className='modal' isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
                 < div className='ui dimmer show modals visible active' >
-                    <div className='ui raised very padded text container segment'>
+                    <div className='LastWatched'>
                         <div>
                             <CrudEdit /><br></br>
                             <button className='deleteButton' style={{ backgroundColor: '#cc3333' }} onClick={klousModal}>Close</button>
@@ -123,6 +123,7 @@ class CrudGet extends React.Component {
 
             ) : (<div className='errormsg'><p className='error'>Could not connect to database. Check connection and username/password.</p></div>)
                 }</>
+
         )
     }
 }

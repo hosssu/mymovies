@@ -1,64 +1,65 @@
 import React from 'react';
 import axios from 'axios';
 import './style.css';
-import { FaStar } from 'react-icons/fa'
-import CrudSearch from './CrudSearch';
 import Modal from 'react-modal';
-import CrudEdit from './CrudEdit'
+import CrudPost from './CrudPost';
+import emptyPic from './image/empty.jpg'
 
-class CrudGetAll extends React.Component {
+class WatchList extends React.Component {
 
     state = {
         user: JSON.parse(window.localStorage.getItem('username')),
-        recentlyW: [],
+        recentlyW: [{
+            movieName: "You haven't added any movies to your watchlist yet",
+            movieOverview: "You can add movies from the TMDB search feature on Mymovies front page",
+            username: JSON.parse(window.localStorage.getItem('username')),
+            poster_image: emptyPic,
+            wlist: 1
+        }],
         variable: 5,
         buttonText: 'Show more...',
         show: false,
+        display: '',
         showModal: false,
         elokuva: '',
-        movieComment: '',
-        movieRating: '',
         hover: '',
         movie_poster: '',
         movie_id: '',
-        movieWatched: '',
+        id: '',
+        movieOverview: '',
+        wlist: 0,
     }
 
     componentDidMount() {
         this.getMovies(this.state.recentlyW);
     }
 
-
     componentDidUpdate(elokuva) {
         window.localStorage.setItem('movie_name', JSON.stringify(this.state.elokuva));
-        window.localStorage.setItem('movieComment', JSON.stringify(this.state.movieComment))
-        window.localStorage.setItem('movieRating', JSON.stringify(this.state.movieRating))
         window.localStorage.setItem('movie_poster', JSON.stringify(this.state.movie_poster))
         window.localStorage.setItem('movie_id', JSON.stringify(this.state.movie_id))
-        window.localStorage.setItem('movieWatched', JSON.stringify(this.state.movieWatched))
+        window.localStorage.setItem('id', JSON.stringify(this.state.id))
     }
-
 
     getMovies = async () => {
-        if (this.state.user) {
-            const res = await axios.get('/get.php')
-            //console.log(res)
-            this.setState({ recentlyW: (res.data) })
-        } else { return null }
+        const res = await axios.get('/getWlist.php')
+        this.setState({ recentlyW: res.data })
+        console.log(res.data)
+        if (res.data.filter(movie => { return movie.wlist == 1 && movie.username == JSON.parse(window.localStorage.getItem('username')) })[0] == null) {
+            this.setState({
+                recentlyW: [{
+                    movieName: "You haven't added any movies to your watchlist yet",
+                    movieOverview: "You can add movies to your watchlist from the TMDB search on Mymovies front page",
+                    username: JSON.parse(window.localStorage.getItem('username')),
+                    poster_image: emptyPic,
+                    wlist: 1
+                }], display: 'none'
+            });
+        } else { }
     }
 
+
     render() {
-
-        const getMovies2 = async () => {
-            const res = await axios.get('/get.php')
-            this.setState({ recentlyW: (res.data) })
-        }
-
-        const onSearchSubmit = async (entry) => {
-            const res = await axios.get('/get.php')
-            const search = res.data.filter(movie => movie.movieName.toLowerCase().includes(`${entry.toLowerCase()}`))
-            this.setState({ recentlyW: search })
-        }
 
         const showMore = () => {
             if (this.state.show === true) {
@@ -70,7 +71,7 @@ class CrudGetAll extends React.Component {
                 this.setState({ buttonText: "Show less..." })
                 this.setState({ show: true })
             }
-
+            console.log(this.state.show)
         }
 
         const klousModal = () => {
@@ -80,14 +81,12 @@ class CrudGetAll extends React.Component {
         const OpenModal = () => {
             var leffat = this.state.recentlyW.filter(movie => { return movie.id === this.state.hover })
             this.setState({ elokuva: leffat[0].movieName })
-            this.setState({ movieComment: leffat[0].movieComment })
-            this.setState({ movieRating: leffat[0].movieRating })
             this.setState({ movie_poster: leffat[0].poster_image })
-            this.setState({ movie_id: leffat[0].id })
-            this.setState({ movieWatched: leffat[0].movieWatched })
+            this.setState({ movie_id: leffat[0].movie_id })
+            this.setState({ id: leffat[0].id })
             this.setState({ showModal: true })
-
         }
+        console.log(this.state.recentlyW)
 
         const tmdb = 'https://www.themoviedb.org/movie/'
 
@@ -95,14 +94,14 @@ class CrudGetAll extends React.Component {
 
             <><Modal className='modal' style={{ overlay: { marginLeft: '-40px' } }} isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
                 < div className='ui dimmer show modals visible active' >
-                    <div className='LastWatched'>
+                    <div className='LastWatched_mod'>
                         <div>
-                            <CrudEdit /><br></br>
+                            <CrudPost /><br></br>
                             <button className='deleteButton' style={{ backgroundColor: '#cc3333' }} onClick={klousModal}>Close</button>
                         </div >
                     </div >
                 </div >
-            </Modal><CrudSearch onSearchSubmit={onSearchSubmit} getMovies={getMovies2} />{this.state.recentlyW ? (
+            </Modal>{this.state.recentlyW ? (
                 <div >
                     {this.state.recentlyW.filter(movie => { return movie.username === this.state.user }).slice(0, `${this.state.variable}`).map(recent => (
 
@@ -113,16 +112,16 @@ class CrudGetAll extends React.Component {
                                     <div className='recentlywatched_inner'>
                                         <img className='poster_recently' src={recent.poster_image} alt='Poster' />
                                     </div>
+
                                     <div className='recentlywatched_inner'>
-                                        <p>Rating:  {recent.movieRating ? ([...Array(parseInt(recent.movieRating))].map(() => { return (< FaStar className='star' color={'#f2d224'} size={20} />) })) : ('not available')}</p>
-                                        <p>Comment: {recent.movieComment}</p>
-                                        <p>Watched: {recent.movieWatched?.substring(0, 10)}</p>
-                                        <p><a href={tmdb + recent.movie_id} target='_blank' rel="noreferrer">Movie in The Movie Database</a></p>
+                                        <p>{recent.movieOverview}</p>
+
                                     </div>
+
                                 </div>
                                 <div className='editButtonContainer'>
-                                    <button className='editButton' onMouseEnter={() => this.setState({ hover: recent.id })} onClick={OpenModal}>Edit</button>
 
+                                    <button className='addButton' style={{ display: `${this.state.display}` }} onMouseEnter={() => this.setState({ hover: recent.id })} onClick={OpenModal}>Add to watched</button><br />
                                 </div>
                             </details>
                         </div>
@@ -137,4 +136,4 @@ class CrudGetAll extends React.Component {
 }
 
 Modal.setAppElement("#modal")
-export default CrudGetAll;
+export default WatchList;
