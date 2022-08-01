@@ -107,6 +107,23 @@ input[type="search"]:focus {
 
 /* recently watched */
 
+details {
+    font-weight: 400;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    padding: .5em;
+    padding-left: 15px;
+}
+
+summary {
+    font-weight: bold;
+    padding: 5px;
+
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+}
 
 .poster_recently {
     border-radius: 40px;
@@ -115,6 +132,7 @@ input[type="search"]:focus {
     width: 230px;
     max-width: 300px;
     margin-top: -25px;
+    padding: 20px;
 
 }
 

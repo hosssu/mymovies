@@ -9,38 +9,21 @@ import StarRating from './StarRating';
 class CrudPost extends React.Component {
 
     state = {
-        movieName: '',
+        movieName: JSON.parse(window.localStorage.getItem('movie_name')),
         movieComment: '',
-        movieWatched: '',
-        startDate: (new Date()),
-        poster_image: '',
+        movieWatched: (new Date()),
+        poster_image: JSON.parse(window.localStorage.getItem('movie_poster')),
         username: JSON.parse(window.localStorage.getItem('username')),
-        movie_id: '',
-        id: '',
-        movieOverview: '',
+        movie_id: JSON.parse(window.localStorage.getItem('movie_id')),
+        id: JSON.parse(window.localStorage.getItem('id')),
+        movieOverview: JSON.parse(window.localStorage.getItem('movieOverview')),
         wlist: 0,
     }
 
     render() {
 
-        const FieldUpdate = () => {
 
-            this.setState({ id: id })
-            this.setState({ movieName: movie_name })
-            this.setState({ poster_image: movie_poster })
-            this.setState({ movie_id: movieID })
-            this.setState({ movieWatched: this.state.startDate })
-            this.setState({ movieOverview: movieOverview })
-
-        }
-
-        var id = JSON.parse(window.localStorage.getItem('id'))
-        var movie_poster = JSON.parse(window.localStorage.getItem('movie_poster'))
-        var movie_name = JSON.parse(window.localStorage.getItem('movie_name'))
-        var movieID = JSON.parse(window.localStorage.getItem('movie_id'))
-        var movieOverview = JSON.parse(window.localStorage.getItem('movieOverview'))
-
-        const submitReview = (event) => {
+        const submitReview = () => {
 
             axios.post('/post.php', {
                 username: this.state.username,
@@ -64,22 +47,22 @@ class CrudPost extends React.Component {
                     <div className='LastWatched_mod'>
 
                         <div className='recentlywatched_inner_mod'>
-                            <img className='poster_mod' src={movie_poster} alt='Poster' />
+                            <img className='poster_mod' src={this.state.poster_image} alt='Poster' />
                         </div>
                         <div className='recentlywatched_inner_mod'>
                             <form className='ui form' onSubmit={submitReview}>
 
                                 <div className='field'>Movie Name
-                                    <input type='text' placeholder={movie_name} onChange={(event) => this.setState({ movieName: event.target.value })}
+                                    <input type='text' placeholder={this.state.movieName} onChange={(event) => this.setState({ movieName: event.target.value })}
                                         value={this.state.movieName}></input>
                                 </div>
                                 <div className='field'>Comment
-                                    <textarea rows='2' placeholder='Write your movie comment' onClick={FieldUpdate} onChange={(event) => this.setState({ movieComment: event.target.value })}
+                                    <textarea rows='2' placeholder='Write your movie comment' onChange={(event) => this.setState({ movieComment: event.target.value })}
                                         value={this.state.movieComment} required></textarea>
                                 </div>
                                 <div className='field'>Rating:<StarRating /></div>
                                 <div className='field'>Date watched
-                                    <DatePicker selected={this.state.startDate} onChange={(date) => this.setState({ startDate: date, movieWatched: date })} />
+                                    <DatePicker selected={this.state.movieWatched} onChange={(date) => this.setState({ movieWatched: date })} />
                                 </div><br />
 
                                 <button type='submit' className='editButton' >Add movie to your watched list!</button>
