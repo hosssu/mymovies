@@ -1,4 +1,4 @@
-#MyMovies
+# MyMovies
 
 Backend hakee tiedostot localhost-mySQL-serveriltä. 
 localhost.sql sisältää tarvittavat taulukot ja muutaman valmiin elokuvan lisättynä.
