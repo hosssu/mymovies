@@ -55,7 +55,7 @@ class TmdbSearch extends React.Component {
                 movieOverview: JSON.parse(window.localStorage.getItem('movieOverview')),
                 wlist: this.state.wlist,
             }).then((res) => {
-                console.log(res)
+                //console.log(res)
             })
             alert(JSON.parse(window.localStorage.getItem('movie_name')) + ' has been added to your watchlist!')
         }

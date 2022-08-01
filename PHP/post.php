@@ -15,7 +15,9 @@ $movieRating = $_POST["movieRating"];
 $movieOverview = $_POST["movieOverview"];
 $wlist = $_POST["wlist"];
 $wlistId = (int) $wlist;
-$keystring = str_replace ("'","\'",$movieOverview);
+$find = array("'", "\"");
+$replace = array("\'","\\\"");
+$keystring = str_replace ($find,$replace,$movieOverview);
 
 $sql = "INSERT INTO movie_reviews (movieName, movieComment, movieRating, movieWatched, poster_image, movie_id, username, wlist, movieOverview) VALUES ('$movieName','$movieComment','$movieRating','$movieWatched','$poster_image','$movie_id','$username', '$wlistId', '$keystring')"; 
 
