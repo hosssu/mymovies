@@ -71,7 +71,7 @@ class WatchList extends React.Component {
                 this.setState({ buttonText: "Show less..." })
                 this.setState({ show: true })
             }
-            console.log(this.state.show)
+
         }
 
         const klousModal = () => {
@@ -86,17 +86,28 @@ class WatchList extends React.Component {
             this.setState({ id: leffat[0].id })
             this.setState({ showModal: true })
         }
-        console.log(this.state.recentlyW)
+
+        const Delete = () => {
+            var leffat = this.state.recentlyW.filter(movie => { return movie.id === this.state.hover })
+            axios.post('/delete.php', {
+                movie_id: leffat[0].id,
+            }).then((res) => {
+                document.location.reload()
+                // console.log(res)
+
+            })
+        }
+
 
         const tmdb = 'https://www.themoviedb.org/movie/'
 
         return (
 
-            <><Modal className='modal' style={{ overlay: { marginLeft: '-40px' } }} isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
+            <><Modal className='modal' style={{ overlay: { paddingTop: '20px', zIndex: '1000', overflowY: 'auto' } }} isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
                 < div className='ui dimmer show modals visible active' >
                     <div className='LastWatched_mod'>
                         <div>
-                            <CrudPost /><br></br>
+                            <CrudPost Delete={Delete} /><br></br>
                             <button className='deleteButton' style={{ backgroundColor: '#cc3333' }} onClick={klousModal}>Close</button>
                         </div >
                     </div >
@@ -112,16 +123,13 @@ class WatchList extends React.Component {
                                     <div className='recentlywatched_inner'>
                                         <img className='poster_recently' src={recent.poster_image} alt='Poster' />
                                     </div>
-
                                     <div className='recentlywatched_inner'>
                                         <p>{recent.movieOverview}</p>
-
                                     </div>
-
                                 </div>
                                 <div className='editButtonContainer'>
-
                                     <button className='addButton' style={{ display: `${this.state.display}` }} onMouseEnter={() => this.setState({ hover: recent.id })} onClick={OpenModal}>Add to watched</button><br />
+                                    <button className='removeButton' onMouseEnter={() => this.setState({ hover: recent.id })} onClick={Delete} style={{ display: `${this.state.display}` }}>Remove</button>
                                 </div>
                             </details>
                         </div>

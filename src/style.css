@@ -1,10 +1,4 @@
 /* main/body */
-html,
-body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
 .body {
     background-color: rgb(33, 33, 33);
     font-family: Helvetica, sans-serif;
@@ -157,6 +151,7 @@ input[type="search"]:focus {
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 10px;
+    gap: 10px;
 }
 
 .edit {
@@ -217,6 +212,25 @@ input[type="search"]:focus {
 
 .addButton:hover {
     background-color: #00a67c;
+    transform: scale(1.1);
+}
+
+.removeButton {
+    background-color: #d3d3d3;
+    padding: 7px 15px;
+    border-radius: 20px;
+    text-align: center;
+    transition-duration: 0.25s;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    margin-bottom: -5px;
+    margin-top: -5px;
+
+}
+
+.removeButton:hover {
+    background-color: #e34350;
     transform: scale(1.1);
 }
 
@@ -312,6 +326,11 @@ input [type="radio"] {
     border-radius: 40px;
     width: 250px;
     max-width: 300px;
+}
+
+.poster_mod {
+    border-radius: 40px;
+    width: 250px;
 }
 
 
@@ -946,6 +965,11 @@ a.more:hover {
         width: 300px;
     }
 
+    .poster_mod {
+        border-radius: 40px;
+        width: 250px;
+    }
+
 }
 
 @media screen and (max-device-width: 600px) {
@@ -1245,6 +1269,11 @@ a.more:hover {
         width: 250px;
     }
 
+    .poster_mod {
+        border-radius: 40px;
+        width: 250px;
+    }
+
 }
 
 @media screen and (max-device-width: 500px) {
@@ -1289,9 +1318,11 @@ a.more:hover {
         display: flex;
         flex-direction: column;
         background-color: white;
-        padding: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
         border-radius: 20px;
         max-width: 700px;
+
     }
 
 
@@ -1312,7 +1343,7 @@ a.more:hover {
         font-family: Helvetica, sans-serif;
         position: relative;
         margin-top: 20px;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
         margin-left: -5px;
         font-weight: 700;
         width: 400px;
@@ -1397,18 +1428,18 @@ a.more:hover {
         display: inline-flex;
         position: absolute;
         top: -60px;
-        left: 320px;
-        width: 120px;
+        left: 290px;
+        width: 100px;
         padding: 2px 15px;
         border-radius: 50px;
         text-align: center;
         transition-duration: 0.5s;
-
+        overflow-x: hidden;
     }
 
     .nav4:hover {
         background-color: #e34350;
-        width: 192px;
+
     }
 
     .nav5 {
@@ -1416,14 +1447,15 @@ a.more:hover {
         display: inline-flex;
         position: absolute;
         top: -60px;
-        left: 280px;
-        width: 140px;
+        left: 240px;
+        width: 100px;
         padding: 2px 15px;
         border-radius: 50px;
         text-align: left;
         transition-duration: 0.3s;
         color: #fff;
         font-size: 10px;
+
 
 
     }
@@ -1449,7 +1481,7 @@ a.more:hover {
         display: inline-flex;
         position: absolute;
         left: 270px;
-        width: 150px;
+        width: 120px;
         padding: 20px 15px;
         border-radius: 50px;
         justify-content: left;
@@ -1502,6 +1534,8 @@ a.more:hover {
         align-items: center;
     }
 
+
+
     .tmdbsearch {
         background-color: #ffffff;
         display: flex;
@@ -1543,6 +1577,47 @@ a.more:hover {
     .poster {
         border-radius: 40px;
         width: 250px;
+    }
+
+    .poster_mod {
+        border-radius: 40px;
+        width: 170px;
+    }
+
+    .star1 {
+        display: block;
+        position: relative;
+        left: 150px;
+        top: -86px;
+        margin-bottom: -50px;
+
+    }
+
+    .editButton {
+        background-color: #00a67c;
+        padding: 5px 15px;
+        border-radius: 20px;
+        text-align: center;
+        transition-duration: 0.25s;
+        font-size: 14px;
+        color: #fff;
+        border: none;
+
+    }
+
+
+
+    .deleteButton {
+        background-color: #e34350;
+        display: block;
+        padding: 5px 15px;
+        position: relative;
+        border-radius: 20px;
+        text-align: center;
+        transition-duration: 0.25s;
+        font-size: 14px;
+        color: #fff;
+        border: none;
     }
 
 }

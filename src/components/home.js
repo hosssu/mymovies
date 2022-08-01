@@ -7,7 +7,7 @@ import CrudGetFriends from './CrudGetFriends';
 
 class home extends React.Component {
 
-    state = { username: window.localStorage.getItem('username'), show: '' }
+    state = { username: JSON.parse(window.localStorage.getItem('username')), show: '' }
 
     render() {
 

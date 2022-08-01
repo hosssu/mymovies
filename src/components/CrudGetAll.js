@@ -93,7 +93,7 @@ class CrudGetAll extends React.Component {
 
         return (
 
-            <><Modal className='modal' style={{ overlay: { marginLeft: '-40px' } }} isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
+            <><Modal className='modal' style={{ overlay: { paddingTop: '20px', zIndex: '1000', overflowY: 'auto' } }} isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
                 < div className='ui dimmer show modals visible active' >
                     <div className='LastWatched'>
                         <div>
@@ -111,7 +111,7 @@ class CrudGetAll extends React.Component {
                                 <summary> {recent.movieName}</summary>
                                 <div className='recentlywatched'>
                                     <div className='recentlywatched_inner'>
-                                        <img className='poster_recently' src={recent.poster_image} alt='Poster' />
+                                        <img className='poster_mod' src={recent.poster_image} alt='Poster' />
                                     </div>
                                     <div className='recentlywatched_inner'>
                                         <p>Rating:  {recent.movieRating ? ([...Array(parseInt(recent.movieRating))].map(() => { return (< FaStar className='star' color={'#f2d224'} size={20} />) })) : ('not available')}</p>

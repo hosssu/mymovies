@@ -4,7 +4,7 @@ import './style.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './style.css';
-import StarRating from '../StarRating';
+import StarRating from './StarRating';
 
 class CrudPost extends React.Component {
 
@@ -29,7 +29,7 @@ class CrudPost extends React.Component {
             this.setState({ movieName: movie_name })
             this.setState({ poster_image: movie_poster })
             this.setState({ movie_id: movieID })
-            this.setState({ movieWatched: new Date() })
+            this.setState({ movieWatched: this.state.startDate })
             this.setState({ movieOverview: movieOverview })
 
         }
@@ -53,6 +53,7 @@ class CrudPost extends React.Component {
                 movieOverview: this.state.movieOverview,
                 wlist: this.state.wlist,
             }).then((res) => {
+                this.props.Delete()
                 console.log(res)
             })
 
@@ -63,28 +64,27 @@ class CrudPost extends React.Component {
                     <div className='LastWatched_mod'>
 
                         <div className='recentlywatched_inner_mod'>
-                            <img className='poster' src={movie_poster} alt='Poster' />
+                            <img className='poster_mod' src={movie_poster} alt='Poster' />
                         </div>
                         <div className='recentlywatched_inner_mod'>
                             <form className='ui form' onSubmit={submitReview}>
 
                                 <div className='field'>Movie Name
-                                    <input type='text' placeholder={movie_name} onClick={FieldUpdate} onChange={(event) => this.setState({ movieName: event.target.value })}
+                                    <input type='text' placeholder={movie_name} onChange={(event) => this.setState({ movieName: event.target.value })}
                                         value={this.state.movieName}></input>
                                 </div>
                                 <div className='field'>Comment
-                                    <textarea rows='2' placeholder='Write your movie comment' onChange={(event) => this.setState({ movieComment: event.target.value })}
-                                        value={this.state.movieComment}></textarea>
+                                    <textarea rows='2' placeholder='Write your movie comment' onClick={FieldUpdate} onChange={(event) => this.setState({ movieComment: event.target.value })}
+                                        value={this.state.movieComment} required></textarea>
                                 </div>
                                 <div className='field'>Rating:<StarRating /></div>
                                 <div className='field'>Date watched
                                     <DatePicker selected={this.state.startDate} onChange={(date) => this.setState({ startDate: date, movieWatched: date })} />
                                 </div><br />
 
-                                <button type='submit' onMouseEnter={FieldUpdate} className='addButton' >Add movie to your watched list!</button>
+                                <button type='submit' className='editButton' >Add movie to your watched list!</button>
                             </form>
                         </div>
-
                     </div>) : (<div> You need to be logged in to add movies to your watched list! </div>)}
             </>
         )

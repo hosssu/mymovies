@@ -84,7 +84,7 @@ class CrudGet extends React.Component {
 
 
         return (
-            <><Modal className='modal' isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
+            <><Modal className='modal' style={{ overlay: { paddingTop: '20px', zIndex: '1000', overflowY: 'auto' } }} isOpen={this.state.showModal} onRequestClose={klousModal} ariaHideApp={false}>
                 < div className='ui dimmer show modals visible active' >
                     <div className='LastWatched'>
                         <div>
