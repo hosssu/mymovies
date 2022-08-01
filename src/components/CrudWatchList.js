@@ -44,7 +44,7 @@ class WatchList extends React.Component {
     getMovies = async () => {
         const res = await axios.get('/getWlist.php')
         this.setState({ recentlyW: res.data })
-        console.log(res.data)
+        //console.log(res.data)
         if (res.data.filter(movie => { return movie.wlist == 1 && movie.username == JSON.parse(window.localStorage.getItem('username')) })[0] == null) {
             this.setState({
                 recentlyW: [{
