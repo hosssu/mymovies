@@ -23,7 +23,7 @@ class CrudSearch extends React.Component {
                 <form onSubmit={this.onFormSubmit}>
                     <div className='input'>
 
-                        <input type="search" placeholder='Search watched movies..'
+                        <input type="search" placeholder='Search MyMovies..'
                             onChange={(event) => this.setState({ entry: event.target.value })}
                             value={this.state.entry}>
                         </input>

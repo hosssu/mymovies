@@ -8,11 +8,21 @@ import Home from './home'
 import Login from './Login';
 import Register from './Register';
 import WatchList from './WatchList';
+import { AuthContext } from "../context/AuthContext";
+import { useEffect } from "react";
+import { useContext } from "react";
 
 const App = () => {
+    const { setLogin, } = useContext(AuthContext)
+
+    useEffect(() => {
+        setLogin();
+    }, [])
+
 
     return (
         <div className='mein'>
+
             <BrowserRouter>
                 <NavBar />
                 <Routes>
@@ -24,6 +34,7 @@ const App = () => {
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </BrowserRouter>
+
         </div>
 
     )

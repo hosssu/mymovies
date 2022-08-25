@@ -4,15 +4,16 @@ import './style.css';
 import Modal from 'react-modal';
 import CrudPost from './CrudPost';
 import emptyPic from './image/empty.jpg'
+import { AuthContext } from "../context/AuthContext";
 
 class WatchList extends React.Component {
-
+    static contextType = AuthContext;
     state = {
-        user: JSON.parse(window.localStorage.getItem('username')),
+        user: JSON.parse(window.sessionStorage.getItem('session')).id,
         recentlyW: [{
             movieName: "You haven't added any movies to your watchlist yet",
             movieOverview: "You can add movies from the TMDB search feature on Mymovies front page",
-            username: JSON.parse(window.localStorage.getItem('username')),
+            username: window.localStorage.getItem('username'),
             poster_image: emptyPic,
             wlist: 1
         }],
@@ -34,23 +35,17 @@ class WatchList extends React.Component {
         this.getMovies(this.state.recentlyW);
     }
 
-    componentDidUpdate(elokuva) {
-        window.localStorage.setItem('movie_name', JSON.stringify(this.state.elokuva));
-        window.localStorage.setItem('movie_poster', JSON.stringify(this.state.movie_poster))
-        window.localStorage.setItem('movie_id', JSON.stringify(this.state.movie_id))
-        window.localStorage.setItem('id', JSON.stringify(this.state.id))
-    }
 
     getMovies = async () => {
         const res = await axios.get('/getWlist.php')
         this.setState({ recentlyW: res.data })
         //console.log(res.data)
-        if (res.data.filter(movie => { return movie.wlist == 1 && movie.username == JSON.parse(window.localStorage.getItem('username')) })[0] == null) {
+        if (res.data.filter(movie => { return movie.wlist == 1 && movie.username == this.context.username })[0] == null) {
             this.setState({
                 recentlyW: [{
                     movieName: "You haven't added any movies to your watchlist yet",
                     movieOverview: "You can add movies to your watchlist from the TMDB search on Mymovies front page",
-                    username: JSON.parse(window.localStorage.getItem('username')),
+                    username: window.localStorage.getItem('username'),
                     poster_image: emptyPic,
                     wlist: 1
                 }], display: 'none'
@@ -78,13 +73,20 @@ class WatchList extends React.Component {
             this.setState({ showModal: false })
         }
 
+        const CloseModalAfterPost = () => {
+            alert(window.localStorage.getItem('movie_name') + ' has been added to MyMovies!')
+            this.setState({ showModal: false })
+            document.location.reload()
+        }
+
         const OpenModal = () => {
             var leffat = this.state.recentlyW.filter(movie => { return movie.id === this.state.hover })
-            this.setState({ elokuva: leffat[0].movieName })
-            this.setState({ movie_poster: leffat[0].poster_image })
-            this.setState({ movie_id: leffat[0].movie_id })
-            this.setState({ id: leffat[0].id })
+            window.localStorage.setItem('movie_name', leffat[0].movieName);
+            window.localStorage.setItem('movie_poster', leffat[0].poster_image)
+            window.localStorage.setItem('movie_id', leffat[0].movie_id)
+            window.localStorage.setItem('id', leffat[0].id)
             this.setState({ showModal: true })
+
         }
 
         const Delete = () => {
@@ -94,12 +96,20 @@ class WatchList extends React.Component {
             }).then((res) => {
                 document.location.reload()
                 // console.log(res)
+            })
+        }
 
+        const DeleteAfterWatched = async () => {
+            await axios.post('/delete.php', {
+                movie_id: window.localStorage.getItem('id')
+            }).then((res) => {
+
+                // console.log(res)
             })
         }
 
 
-        const tmdb = 'https://www.themoviedb.org/movie/'
+
 
         return (
 
@@ -107,7 +117,7 @@ class WatchList extends React.Component {
                 < div className='ui dimmer show modals visible active' >
                     <div className='LastWatched_mod'>
                         <div>
-                            <CrudPost Delete={Delete} /><br></br>
+                            <CrudPost Delete={DeleteAfterWatched} CloseModal={CloseModalAfterPost} /><br></br>
                             <button className='deleteButton' style={{ backgroundColor: '#cc3333' }} onClick={klousModal}>Close</button>
                         </div >
                     </div >
@@ -128,8 +138,8 @@ class WatchList extends React.Component {
                                     </div>
                                 </div>
                                 <div className='editButtonContainer'>
-                                    <button className='addButton' style={{ display: `${this.state.display}` }} onMouseEnter={() => this.setState({ hover: recent.id })} onClick={OpenModal}>Add to watched</button><br />
-                                    <button className='removeButton' onMouseEnter={() => this.setState({ hover: recent.id })} onClick={Delete} style={{ display: `${this.state.display}` }}>Remove</button>
+                                    <button className='addButton' style={{ display: `${this.state.display}` }} onMouseOver={() => this.setState({ hover: recent.id })} onClick={OpenModal}>Add to MyMovies</button><br />
+                                    <button className='removeButton' onMouseOver={() => this.setState({ hover: recent.id })} onClick={Delete} style={{ display: `${this.state.display}` }}>Remove</button>
                                 </div>
                             </details>
                         </div>

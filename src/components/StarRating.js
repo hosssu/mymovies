@@ -10,7 +10,7 @@ const StarRating = () => {
     const [show, setShow] = useState('none')
 
     useEffect(() => {
-        window.localStorage.setItem('movieRating', JSON.stringify(rating))
+        window.localStorage.setItem('movieRating', rating)
     }, [rating])
 
     return (

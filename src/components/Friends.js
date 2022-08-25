@@ -1,5 +1,5 @@
 import React from 'react';
-import CrudGetFriends from './CrudGetFriends';
+import CrudGetFriendsAll from './CrudGetFriendsAll';
 import './style.css';
 
 
@@ -13,8 +13,8 @@ export default function Friends() {
                     <div className='LastWatched'>
 
 
-                        <h2 style={{ textAlign: 'center' }}>Watched by friends</h2>
-                        <CrudGetFriends />
+
+                        <CrudGetFriendsAll />
                     </div>
 
                     <br></br><br></br>

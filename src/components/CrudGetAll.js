@@ -5,11 +5,12 @@ import { FaStar } from 'react-icons/fa'
 import CrudSearch from './CrudSearch';
 import Modal from 'react-modal';
 import CrudEdit from './CrudEdit'
+import { AuthContext } from "../context/AuthContext";
 
 class CrudGetAll extends React.Component {
-
+    static contextType = AuthContext;
     state = {
-        user: JSON.parse(window.localStorage.getItem('username')),
+        user: JSON.parse(window.sessionStorage.getItem('session')).id,
         recentlyW: [],
         variable: 5,
         buttonText: 'Show more...',
@@ -30,12 +31,12 @@ class CrudGetAll extends React.Component {
 
 
     componentDidUpdate(elokuva) {
-        window.localStorage.setItem('movie_name', JSON.stringify(this.state.elokuva));
-        window.localStorage.setItem('movieComment', JSON.stringify(this.state.movieComment))
-        window.localStorage.setItem('movieRating', JSON.stringify(this.state.movieRating))
-        window.localStorage.setItem('movie_poster', JSON.stringify(this.state.movie_poster))
-        window.localStorage.setItem('movie_id', JSON.stringify(this.state.movie_id))
-        window.localStorage.setItem('movieWatched', JSON.stringify(this.state.movieWatched))
+        window.localStorage.setItem('movie_name', this.state.elokuva)
+        window.localStorage.setItem('movieComment', this.state.movieComment)
+        window.localStorage.setItem('movieRating', this.state.movieRating)
+        window.localStorage.setItem('movie_poster', this.state.movie_poster)
+        window.localStorage.setItem('movie_id', this.state.movie_id)
+        window.localStorage.setItem('movieWatched', this.state.movieWatched)
     }
 
 
@@ -66,7 +67,7 @@ class CrudGetAll extends React.Component {
                 this.setState({ buttonText: "Show more..." })
                 this.setState({ show: false })
             } else {
-                this.setState({ variable: 10 })
+                this.setState({ variable: 50 })
                 this.setState({ buttonText: "Show less..." })
                 this.setState({ show: true })
             }

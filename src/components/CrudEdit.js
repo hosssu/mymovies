@@ -4,16 +4,17 @@ import './style.css';
 import "react-datepicker/dist/react-datepicker.css";
 import './style.css';
 import StarRating from './StarRating';
+import { AuthContext } from "../context/AuthContext";
 
 class CrudEdit extends React.Component {
-
+    static contextType = AuthContext;
     state = {
-        movieName: JSON.parse(window.localStorage.getItem('movie_name')),
-        movieComment: JSON.parse(window.localStorage.getItem('movieComment')),
-        movieWatched: JSON.parse(window.localStorage.getItem('movieWatched')),
-        poster_image: JSON.parse(window.localStorage.getItem('movie_poster')),
-        username: JSON.parse(window.localStorage.getItem('username')),
-        movie_id: JSON.parse(window.localStorage.getItem('movie_id')),
+        movieName: window.localStorage.getItem('movie_name'),
+        movieComment: window.localStorage.getItem('movieComment'),
+        movieWatched: window.localStorage.getItem('movieWatched'),
+        poster_image: window.localStorage.getItem('movie_poster'),
+        username: this.context.username,
+        movie_id: window.localStorage.getItem('movie_id'),
         recentlyW: []
     }
 
@@ -36,7 +37,7 @@ class CrudEdit extends React.Component {
 
         const Delete = () => {
             axios.post('/delete.php', {
-                movie_id: JSON.parse(window.localStorage.getItem('movie_id')),
+                movie_id: window.localStorage.getItem('movie_id'),
             }).then((res) => {
                 // console.log(res)
 

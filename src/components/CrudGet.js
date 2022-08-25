@@ -4,12 +4,13 @@ import './style.css';
 import { FaStar } from 'react-icons/fa'
 import Modal from 'react-modal';
 import CrudEdit from './CrudEdit'
+import { AuthContext } from '../context/AuthContext';
 
 class CrudGet extends React.Component {
-
+    static contextType = AuthContext;
     state = {
-        user: JSON.parse(window.localStorage.getItem('username')),
-        recentlyW: [{ movieName: "You haven't added any movies to your watchlist yet", movieOverview: "You can add movies from the TMDB search feature on Mymovies front page", user: JSON.parse(window.localStorage.getItem('username')), wlist: 0 }],
+        user: window.sessionStorage.getItem('session'),
+        recentlyW: [{ movieName: "You haven't added any movies to your watchlist yet", movieOverview: "You can add movies from the TMDB search feature on Mymovies front page", user: window.localStorage.getItem('username'), wlist: 0 }],
         variable: 5,
         buttonText: 'Show more...',
         show: false,
@@ -25,16 +26,19 @@ class CrudGet extends React.Component {
 
     componentDidMount() {
         this.getMovies(this.state.recentlyW);
+        if (this.state.user !== null) {
+            this.setState({ user: JSON.parse(this.state.user).id })
+        }
     }
 
 
     componentDidUpdate(elokuva) {
-        window.localStorage.setItem('movie_name', JSON.stringify(this.state.elokuva));
-        window.localStorage.setItem('movieComment', JSON.stringify(this.state.movieComment))
-        window.localStorage.setItem('movieRating', JSON.stringify(this.state.movieRating))
-        window.localStorage.setItem('movie_poster', JSON.stringify(this.state.movie_poster))
-        window.localStorage.setItem('movie_id', JSON.stringify(this.state.movie_id))
-        window.localStorage.setItem('movieWatched', JSON.stringify(this.state.movieWatched))
+        window.localStorage.setItem('movie_name', this.state.elokuva);
+        window.localStorage.setItem('movieComment', this.state.movieComment)
+        window.localStorage.setItem('movieRating', this.state.movieRating)
+        window.localStorage.setItem('movie_poster', this.state.movie_poster)
+        window.localStorage.setItem('movie_id', this.state.movie_id)
+        window.localStorage.setItem('movieWatched', this.state.movieWatched)
     }
 
 
@@ -46,6 +50,7 @@ class CrudGet extends React.Component {
 
         } else { return null }
     }
+
 
     render() {
 
@@ -81,6 +86,7 @@ class CrudGet extends React.Component {
         }
 
         const tmdb = 'https://www.themoviedb.org/movie/'
+
 
 
         return (

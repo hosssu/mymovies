@@ -1,11 +1,10 @@
 import React from 'react';
 import './style.css'
 import CrudWatchList from './CrudWatchList'
-
+import { AuthContext } from "../context/AuthContext";
 
 class WatchList extends React.Component {
-
-    state = { username: window.localStorage.getItem('username'), show: '' }
+    static contextType = AuthContext;
 
     render() {
 
@@ -13,7 +12,7 @@ class WatchList extends React.Component {
             <div>
 
                 <div className='LastWatched' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
-                    <div className={this.state.username ? 'LastWatched' : 'hide'} >
+                    <div className={this.context.isLoggedIn ? 'LastWatched' : 'hide'} >
                         <h2 style={{ textAlign: 'center' }}>Watchlist</h2>
                         <CrudWatchList />
                     </div> <br />

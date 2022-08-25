@@ -10,7 +10,7 @@ const watched = () => {
             <div className='LastWatched' style={{ marginTop: '50px', backgroundColor: 'lightgray' }}>
 
                 <div className='LastWatched'>
-                    <h2 style={{ textAlign: 'center' }}>Watched</h2>
+                    <h2 style={{ textAlign: 'center' }}>Search movies from MyMovies</h2>
                     <CrudGetAll />
                 </div><br></br><br></br>
 
